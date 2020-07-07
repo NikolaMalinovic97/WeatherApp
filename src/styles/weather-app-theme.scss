@@ -1,0 +1,18 @@
+@import 'src/styles/weather-app-colors.scss';
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$weather-app-primary: mat-palette($weather-app-blue);
+$weather-app-accent:  mat-palette($weather-app-purple, A200, A100, A400);
+$weather-app-warn:    mat-palette($mat-red);
+
+$weather-app-theme: mat-light-theme((
+  color: (
+    primary: $weather-app-primary,
+    accent: $weather-app-accent,
+    warn: $weather-app-warn,  
+  )
+));
+
+@include angular-material-theme($weather-app-theme);
