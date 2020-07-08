@@ -9,13 +9,13 @@
   background-size: cover;
 }
 
-.left-triangle {
+@media(min-width: 960px) {
+  .left-triangle {
     width: 200px;
     height: 0;
     border-style: solid;
     border-width: 0 30px 30px 0;
     border-color: transparent transparent $content-background transparent;
-    // border-radius: 0px 0px 50px 0;
     right: 0px;
     top: -30px;
     position: relative;
@@ -27,7 +27,6 @@
     border-style: solid;
     border-width: 0 30px 30px 0;
     border-color: transparent transparent $content-background transparent;
-    // border-radius: 0 0 50px 0;
     left: 730px;
     top: -60px;
     position: relative;
@@ -36,10 +35,12 @@
     -webkit-transform: scaleX(-1); /* Webkit */
     transform:         scaleX(-1); /* Standard */
     filter: FlipH;                 /* IE 6/7/8 */
+  }
 }
 
 .logo {
-  width: 320px;
+  max-width: 320px;
+  width: 100%;
   margin-bottom: 20px !important;
 }
 
