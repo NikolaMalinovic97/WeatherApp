@@ -1,0 +1,16 @@
+@import 'src/styles/weather-app-colors.scss';
+
+.background {
+    min-height: 100%;
+    background-color: $app-background;
+}
+
+.content-wrapper {
+    width: 960px;
+    background-color: $content-background;
+    box-shadow: 0 2px 16px rgba(0,0,0,.12);
+}
+
+.header {
+    height: 364px;
+}
