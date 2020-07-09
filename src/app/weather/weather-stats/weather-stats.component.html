@@ -1,9 +1,9 @@
 <div class="wrapper" fxLayout="column" fxLayoutAlign="space-between stretch">
 
-  <button class="mb" mat-stroked-button color="primary" (click)="openDialog()">Departure place</button>
+  <button class="mb" mat-stroked-button color="primary" (click)="openDialog()">{{ buttonTitle }}</button>
 
   <div class="stats-wrapper mb p rounded" fxLayout="column">
-    <h3 class="mb">Departure weather</h3>
+    <h3 class="mb">{{ buttonTitle }} weather</h3>
     <div fxLayout="row">
       <div fxLayout="column" fxFlex="50">
         <p><b>Dew Point:</b></p>
@@ -22,25 +22,25 @@
     <div class="rounded p mini-stats-wrapper" fxLayout="column" fxLayoutAlign="start center" fxFlex="24">
       <h1>{{ weather.fog }}%</h1>
       <h3><b>Fog</b></h3>
-      <div class="sun"></div>
+      <div appWeatherBackground weatherType="fog" [weatherValue]="weather.fog"></div>
     </div>
     <div class="rounded p mini-stats-wrapper" fxLayout="column" fxLayoutAlign="start center" fxFlex="24">
       <h1>{{ weather.lowClouds }}%</h1>
       <h3><b>Low</b></h3>
       <h3><b>Clouds</b></h3>
-      <div class="cloud-low"></div>
+      <div appWeatherBackground weatherType="lowClouds" [weatherValue]='weather.lowClouds'></div>
     </div>
     <div class="rounded p mini-stats-wrapper" fxLayout="column" fxLayoutAlign="start center" fxFlex="24">
       <h1>{{ weather.mediumClouds }}%</h1>
       <h3><b>Medium</b></h3>
       <h3><b>Clouds</b></h3>
-      <div class="cloud-medium"></div>
+      <div appWeatherBackground weatherType="mediumClouds" [weatherValue]="weather.mediumClouds"></div>
     </div>
     <div class="rounded p mini-stats-wrapper" fxLayout="column" fxLayoutAlign="start center" fxFlex="24">
       <h1>{{ weather.highClouds }}%</h1>
       <h3><b>High</b></h3>
       <h3><b>Clouds</b></h3>
-      <div class="cloud-high"></div>
+      <div appWeatherBackground weatherType="highClouds" [weatherValue]='weather.highClouds'></div>
     </div>
   </div>
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { WeatherService } from 'src/app/weather/service/weather.service';
 import { Weather } from '../model/weather.model';
 import xml2js from 'xml2js';
@@ -12,6 +12,7 @@ import { WeatherDialogComponent } from '../weather-dialog/weather-dialog.compone
 })
 export class WeatherStatsComponent implements OnInit {
 
+  @Input() buttonTitle: string;
   weather: Weather;
 
   constructor(private weatherService: WeatherService, private dialog: MatDialog) {
@@ -26,7 +27,6 @@ export class WeatherStatsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        console.log(result);
         this.updateWeather(result.latitude, result.longitude);
       }
     });
