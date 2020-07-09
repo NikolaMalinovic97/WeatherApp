@@ -5,8 +5,7 @@ h1, h3, p {
 }
 
 .wrapper {
-    max-width: 320px !important;
-    width: 100%;
+    width: 320px;
     padding-top: 40px;
 }
 
@@ -28,6 +27,8 @@ button {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: 10% 80%;
+    height: 100%;
+    width: 100%;
 }
 
 .cloud-low {
@@ -36,6 +37,8 @@ button {
     background-size: contain;
     background-position: 10% 90%;
     opacity: 0.5;
+    height: 100%;
+    width: 100%;
 }
 
 .cloud-medium {
@@ -43,6 +46,8 @@ button {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: 10% 80%;
+    height: 100%;
+    width: 100%;
 }
 
 .cloud-high {
@@ -50,6 +55,8 @@ button {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: 10% 70%;
+    height: 100%;
+    width: 100%;
 }
 
 .mb {

@@ -1,0 +1,14 @@
+.mb {
+    margin-bottom: 12px !important;
+}
+
+@media (min-width: 600px) {
+    
+    .pr-xs {
+        padding-right: 10px;
+    }
+
+    .pl-xs {
+        padding-left: 10px;
+    }
+}
