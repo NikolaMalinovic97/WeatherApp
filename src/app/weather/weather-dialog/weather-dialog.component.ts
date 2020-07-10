@@ -14,8 +14,6 @@ export class WeatherDialogComponent implements OnInit {
 
   @ViewChild('search') public searchElement: ElementRef;
 
-  latitude: number;
-  longitude: number;
   locationForm: FormGroup;
 
   constructor(public dialogRef: MatDialogRef<WeatherDialogComponent>, private formBuilder: FormBuilder,
@@ -38,18 +36,23 @@ export class WeatherDialogComponent implements OnInit {
         this.ngZone.run(() => {
           const place: google.maps.places.PlaceResult = autocomplete.getPlace();
           if (place.geometry !== undefined && place.geometry !== null) {
-            this.latitude = place.geometry.location.lat();
-            this.longitude = place.geometry.location.lng();
-            this.locationForm.value.location = this.searchElement.nativeElement.value;
+            const newLatitude = place.geometry.location.lat();
+            this.locationForm.get('latitude').setValue(newLatitude);
+            const newLongitude = place.geometry.location.lng();
+            this.locationForm.get('longitude').setValue(newLongitude);
+            const newLocation = this.searchElement.nativeElement.value;
+            this.locationForm.get('location').setValue(newLocation);
           }
         });
       });
     });
   }
 
-  async test(): Promise<void> {
+  async updateLocation(): Promise<void> {
     if (this.locationForm.valid) {
-      this.locationForm.value.location = await this.googleLocationService.getLocationByCoordinates(this.latitude, this.longitude);
+      const newLocation = await this.googleLocationService.getLocationByCoordinates(
+        this.locationForm.get('latitude').value, this.locationForm.get('longitude').value);
+      this.locationForm.get('location').setValue(newLocation);
     }
   }
 
