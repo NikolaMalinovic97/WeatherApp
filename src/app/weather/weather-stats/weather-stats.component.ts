@@ -14,12 +14,14 @@ export class WeatherStatsComponent implements OnInit {
 
   @Input() buttonTitle: string;
   weather: Weather;
+  location: string;
 
   constructor(private weatherService: WeatherService, private dialog: MatDialog) {
     this.weather = new Weather(0, 0, 0, 0, 0, 0, 0);
   }
 
   ngOnInit(): void {
+    this.location = `Please choose ${this.buttonTitle.toLowerCase()} location`;
   }
 
   openDialog(): void {
@@ -27,6 +29,7 @@ export class WeatherStatsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
+        this.location = result.location;
         this.updateWeather(result.latitude, result.longitude);
       }
     });

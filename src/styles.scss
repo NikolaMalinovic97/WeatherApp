@@ -1,6 +1,16 @@
+@import 'src/styles/weather-app-colors.scss';
+
 *:not(label) {
     margin: 0 !important;
 }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-stroked-button.mat-primary {
+    border-color: $weather-app-primary !important;
+}
+
+.mat-error {
+    padding-top: 4px;
+}

@@ -1,9 +1,9 @@
 /// <reference types="@types/googlemaps" />
 import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MapsAPILoader } from '@agm/core';
-// import { } from '@types/googlemaps';
+import { GoogleLocationService } from '../service/google-location.service';
 
 @Component({
   selector: 'app-weather-dialog',
@@ -12,43 +12,56 @@ import { MapsAPILoader } from '@agm/core';
 })
 export class WeatherDialogComponent implements OnInit {
 
-  locationForm: FormGroup;
-
   @ViewChild('search') public searchElement: ElementRef;
 
+  latitude: number;
+  longitude: number;
+  location: string;
+  locationForm: FormGroup;
+
   constructor(public dialogRef: MatDialogRef<WeatherDialogComponent>, private formBuilder: FormBuilder,
-              private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) { }
+              private mapsAPILoader: MapsAPILoader, private ngZone: NgZone, private googleLocationService: GoogleLocationService) { }
 
   ngOnInit(): void {
-    const LATITUDE = '^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$';
-    const LONGITUDE = '^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$';
-
-    this.locationForm = this.formBuilder.group({
-      latitude: ['', [Validators.required, Validators.pattern(LATITUDE)]],
-      longitude: ['', [Validators.required, Validators.pattern(LONGITUDE)]]
-    });
-
-    this.places();
+    this.locationForm = this.createLocationForm();
+    this.initPlaces();
   }
 
-  onSubmit(): any {
+  onSubmit(): void {
     this.dialogRef.close(this.locationForm.value);
   }
 
-  places(): any {
+  initPlaces(): any {
     this.mapsAPILoader.load().then(() => {
-      const autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, { types: ['address'] });
+      const autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, { types: ['geocode'] });
 
       autocomplete.addListener('place_changed', () => {
         this.ngZone.run(() => {
           const place: google.maps.places.PlaceResult = autocomplete.getPlace();
-
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
+          if (place.geometry !== undefined && place.geometry !== null) {
+            this.latitude = place.geometry.location.lat();
+            this.longitude = place.geometry.location.lng();
+            this.location = this.searchElement.nativeElement.value;
           }
         });
       });
     });
   }
 
+  async test(): Promise<void> {
+    if (this.locationForm.valid) {
+      this.location = await this.googleLocationService.getLocationByCoordinates(this.latitude, this.longitude);
+    }
+  }
+
+  private createLocationForm(): any {
+    const LATITUDE = '^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]*)?))$';
+    const LONGITUDE = '^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]*)?))$';
+
+    return this.formBuilder.group({
+      location: [''],
+      latitude: ['', [Validators.required, Validators.pattern(LATITUDE)]],
+      longitude: ['', [Validators.required, Validators.pattern(LONGITUDE)]]
+    });
+  }
 }
