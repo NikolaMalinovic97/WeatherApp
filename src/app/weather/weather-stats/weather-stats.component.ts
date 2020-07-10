@@ -21,40 +21,16 @@ export class WeatherStatsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.location = this.getStoredLocation();
-    const latitude = this.getStoredLatitude();
-    const longitude = this.getStoredLongitude();
-    this.updateWeather(latitude, longitude);
+    this.loadWeatherStatsFromStorage();
   }
 
-  private getStoredLocation(): string {
-    const fullLocation: any = this.weatherService.getLocationByTitle(this.buttonTitle);
-    let location = fullLocation.location;
-
-    if (location === undefined || location === null) {
-      location = `Please choose ${this.buttonTitle.toLowerCase()} location`;
+  private loadWeatherStatsFromStorage(): void {
+    this.location = this.weatherService.getLocationByTitle(this.buttonTitle);
+    const latitude =  this.weatherService.getLatitudeByTitle(this.buttonTitle);
+    const longitude = this.weatherService.getLongitudeByTitle(this.buttonTitle);
+    if (latitude !== 0 && longitude !== 0) {
+      this.updateWeather(latitude, longitude);
     }
-    return location;
-  }
-
-  private getStoredLatitude(): number {
-    const fullLocation: any = this.weatherService.getLocationByTitle(this.buttonTitle);
-    let location = fullLocation.latitude;
-
-    if (location === undefined || location === null) {
-      location = 0;
-    }
-    return location;
-  }
-
-  private getStoredLongitude(): number {
-    const fullLocation: any = this.weatherService.getLocationByTitle(this.buttonTitle);
-    let location = fullLocation.longitude;
-
-    if (location === undefined || location === null) {
-      location = 0;
-    }
-    return location;
   }
 
   openDialog(): void {

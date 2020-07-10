@@ -20,6 +20,26 @@ export class WeatherService {
   }
 
   getLocationByTitle(title: string): string {
-    return JSON.parse(localStorage.getItem(`${title}Location`));
+    if (localStorage.getItem(`${title}Location`) == null) {
+      return `Please choose ${title.toLowerCase()} location`;
+    }
+    const fullLocation = JSON.parse(localStorage.getItem(`${title}Location`));
+    return fullLocation.location;
+  }
+
+  getLatitudeByTitle(title: string): number {
+    if (localStorage.getItem(`${title}Location`) == null) {
+      return 0;
+    }
+    const fullLocation = JSON.parse(localStorage.getItem(`${title}Location`));
+    return fullLocation.latitude;
+  }
+
+  getLongitudeByTitle(title: string): number {
+    if (localStorage.getItem(`${title}Location`) == null) {
+      return 0;
+    }
+    const fullLocation = JSON.parse(localStorage.getItem(`${title}Location`));
+    return fullLocation.longitude;
   }
 }
