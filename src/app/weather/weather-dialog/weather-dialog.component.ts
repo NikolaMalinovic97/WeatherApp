@@ -16,7 +16,6 @@ export class WeatherDialogComponent implements OnInit {
 
   latitude: number;
   longitude: number;
-  location: string;
   locationForm: FormGroup;
 
   constructor(public dialogRef: MatDialogRef<WeatherDialogComponent>, private formBuilder: FormBuilder,
@@ -41,7 +40,7 @@ export class WeatherDialogComponent implements OnInit {
           if (place.geometry !== undefined && place.geometry !== null) {
             this.latitude = place.geometry.location.lat();
             this.longitude = place.geometry.location.lng();
-            this.location = this.searchElement.nativeElement.value;
+            this.locationForm.value.location = this.searchElement.nativeElement.value;
           }
         });
       });
@@ -50,7 +49,7 @@ export class WeatherDialogComponent implements OnInit {
 
   async test(): Promise<void> {
     if (this.locationForm.valid) {
-      this.location = await this.googleLocationService.getLocationByCoordinates(this.latitude, this.longitude);
+      this.locationForm.value.location = await this.googleLocationService.getLocationByCoordinates(this.latitude, this.longitude);
     }
   }
 

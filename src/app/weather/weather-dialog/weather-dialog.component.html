@@ -4,7 +4,7 @@
 
   <mat-form-field appearance="outline" style="width: 100%;">
     <mat-label>Location</mat-label>
-    <input [(ngModel)]="location" matInput placeholder="Enter location" formControlName="location" #search>
+    <input [(ngModel)]="locationForm.value.location" matInput placeholder="Enter location" formControlName="location" #search>
   </mat-form-field>
 
   <h3 class="mb">Or enter coordinates</h3>
@@ -12,7 +12,7 @@
   <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center">
     <mat-form-field class="pr-xs" appearance="outline">
       <mat-label>Latitude</mat-label>
-      <input [(ngModel)]="latitude" type="number" matInput placeholder="00.00" formControlName="latitude" (change)="test()">
+      <input [(ngModel)]="latitude" type="number" matInput placeholder="00.00" formControlName="latitude" (keyup)="test()">
       <mat-error *ngIf="locationForm.controls.latitude.errors?.required">
         Latitude is required
       </mat-error>
@@ -23,7 +23,7 @@
 
     <mat-form-field class="pl-xs" appearance="outline">
       <mat-label>Longitude</mat-label>
-      <input [(ngModel)]="longitude" type="number"  matInput placeholder="00.00" formControlName="longitude" (change)="test()">
+      <input [(ngModel)]="longitude" type="number"  matInput placeholder="00.00" formControlName="longitude" (keyup)="test()">
       <mat-error *ngIf="locationForm.controls.longitude.errors?.required">
         Longitude is required
       </mat-error>
