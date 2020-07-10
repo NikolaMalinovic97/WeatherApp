@@ -14,4 +14,12 @@ export class WeatherService {
   getWeather(lat: number, lon: number): any {
     return this.http.get(`${this.apiUrl}/?lat=${lat};lon=${lon}`, { responseType: 'text' });
   }
+
+  saveLocation(location: string, title: string): void {
+    localStorage.setItem(`${title}Location`, JSON.stringify(location));
+  }
+
+  getLocationByTitle(title: string): string {
+    return JSON.parse(localStorage.getItem(`${title}Location`));
+  }
 }

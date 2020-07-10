@@ -16,8 +16,13 @@ export class WeatherDialogComponent implements OnInit {
 
   locationForm: FormGroup;
 
-  constructor(public dialogRef: MatDialogRef<WeatherDialogComponent>, private formBuilder: FormBuilder,
-              private mapsAPILoader: MapsAPILoader, private ngZone: NgZone, private googleLocationService: GoogleLocationService) { }
+  constructor(
+    public dialogRef: MatDialogRef<WeatherDialogComponent>,
+    private formBuilder: FormBuilder,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone,
+    private googleLocationService: GoogleLocationService
+  ) { }
 
   ngOnInit(): void {
     this.locationForm = this.createLocationForm();
