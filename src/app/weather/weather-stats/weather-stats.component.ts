@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { WeatherService } from 'src/app/weather/service/weather.service';
 import { Weather } from '../model/weather.model';
-import xml2js from 'xml2js';
 import { MatDialog } from '@angular/material/dialog';
 import { WeatherDialogComponent } from '../weather-dialog/weather-dialog.component';
 
@@ -43,7 +42,7 @@ export class WeatherStatsComponent implements OnInit {
 
   private loadWeatherStatsFromStorage(): void {
     this.location = this.weatherService.getLocationByTitle(this.buttonTitle);
-    this.latitude =  this.weatherService.getLatitudeByTitle(this.buttonTitle);
+    this.latitude = this.weatherService.getLatitudeByTitle(this.buttonTitle);
     this.longitude = this.weatherService.getLongitudeByTitle(this.buttonTitle);
     if (this.latitude !== 0 && this.longitude !== 0) {
       this.updateWeather(this.latitude, this.longitude);
@@ -52,16 +51,14 @@ export class WeatherStatsComponent implements OnInit {
 
   private updateWeather(lat: number, lon: number): void {
     this.weatherService.getWeather(lat, lon).subscribe(res => {
-      xml2js.parseString(res, (err, result) => {
-        const stats = result.weatherdata.product[0].time[0].location[0];
-        this.weather.humidity = Math.round(stats.humidity[0].$.value);
-        this.weather.dewPoint = Math.round(stats.dewpointTemperature[0].$.value);
-        this.weather.temperature = Math.round(stats.temperature[0].$.value);
-        this.weather.fog = Math.round(stats.fog[0].$.percent);
-        this.weather.lowClouds = Math.round(stats.lowClouds[0].$.percent);
-        this.weather.mediumClouds = Math.round(stats.mediumClouds[0].$.percent);
-        this.weather.highClouds = Math.round(stats.highClouds[0].$.percent);
-      });
+      const stats = res.product.time[0].location;
+      this.weather.humidity = Math.round(stats.humidity.value);
+      this.weather.dewPoint = Math.round(stats.dewpointTemperature.value);
+      this.weather.temperature = Math.round(stats.temperature.value);
+      this.weather.fog = Math.round(stats.fog.percent);
+      this.weather.lowClouds = Math.round(stats.lowClouds.percent);
+      this.weather.mediumClouds = Math.round(stats.mediumClouds.percent);
+      this.weather.highClouds = Math.round(stats.highClouds.percent);
     });
   }
 }
