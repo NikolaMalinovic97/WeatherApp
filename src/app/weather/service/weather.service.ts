@@ -7,12 +7,12 @@ import { Weather } from '../model/weather.model';
 })
 export class WeatherService {
 
-  apiUrl = 'https://api.met.no/weatherapi/locationforecast/1.9';
+  apiUrl = 'https://api.met.no/weatherapi/locationforecast/1.9/';
 
   constructor(private http: HttpClient) { }
 
   getWeather(lat: number, lon: number): any {
-    return this.http.get(`${this.apiUrl}/?lat=${lat};lon=${lon}`, { responseType: 'text' });
+    return this.http.get(`${this.apiUrl}.json?lat=${lat};lon=${lon}`);
   }
 
   saveLocation(location: string, title: string): void {
