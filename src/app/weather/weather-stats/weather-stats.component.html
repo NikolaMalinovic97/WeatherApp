@@ -3,7 +3,7 @@
   <button class="mb" mat-stroked-button color="primary" (click)="openDialog()">{{ buttonTitle }}</button>
 
   <div class="stats-wrapper mb p rounded" fxLayout="column">
-    <h3 class="mb">{{ buttonTitle }} weather</h3>
+    <h3 class="location mb">{{ location !== '' ? location : 'Please choose location' }}</h3>
     <div fxLayout="row">
       <div fxLayout="column" fxFlex="50">
         <p><b>Dew Point:</b></p>

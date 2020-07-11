@@ -1,10 +1,10 @@
-<form [formGroup]="locationForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="space-between center">
+<form [formGroup]="locationForm" fxLayout="column" fxLayoutAlign="space-between center">
 
   <h3 class="mb">Enter Your location</h3>
 
   <mat-form-field appearance="outline" style="width: 100%;">
     <mat-label>Location</mat-label>
-    <input matInput placeholder="Enter location">
+    <input matInput placeholder="Enter location" formControlName="location" #search>
   </mat-form-field>
 
   <h3 class="mb">Or enter coordinates</h3>
@@ -12,7 +12,7 @@
   <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center">
     <mat-form-field class="pr-xs" appearance="outline">
       <mat-label>Latitude</mat-label>
-      <input matInput placeholder="00.00" formControlName="latitude">
+      <input type="number" matInput placeholder="00.00" formControlName="latitude" (keyup)="updateLocation()">
       <mat-error *ngIf="locationForm.controls.latitude.errors?.required">
         Latitude is required
       </mat-error>
@@ -23,7 +23,7 @@
 
     <mat-form-field class="pl-xs" appearance="outline">
       <mat-label>Longitude</mat-label>
-      <input matInput placeholder="00.00" formControlName="longitude">
+      <input type="number"  matInput placeholder="00.00" formControlName="longitude" (keyup)="updateLocation()">
       <mat-error *ngIf="locationForm.controls.longitude.errors?.required">
         Longitude is required
       </mat-error>
@@ -33,7 +33,7 @@
     </mat-form-field>
   </div>
 
-  <button mat-raised-button type="submit" color="primary" [disabled]="!locationForm.valid"
-    style="width: 100%;">Submit</button>
+  <button mat-raised-button color="primary" [disabled]="!locationForm.valid"
+    style="width: 100%;" type="button" (click)="onSubmit()">Submit</button>
 
 </form>

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './material/material.module';
 import { WeatherModule } from './weather/weather.module';
+import { AgmCoreModule } from '@agm/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,7 +25,11 @@ import { FooterComponent } from './footer/footer.component';
     FlexLayoutModule,
     BrowserAnimationsModule,
     MaterialModule,
-    WeatherModule
+    WeatherModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCROscb4Gmn7-5X6ERb9C5EiEjI-BY53wE',
+      libraries: ['places']
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

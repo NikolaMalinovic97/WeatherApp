@@ -14,25 +14,43 @@ export class WeatherStatsComponent implements OnInit {
 
   @Input() buttonTitle: string;
   weather: Weather;
+  location: string;
+  latitude: number;
+  longitude: number;
 
   constructor(private weatherService: WeatherService, private dialog: MatDialog) {
     this.weather = new Weather(0, 0, 0, 0, 0, 0, 0);
   }
 
   ngOnInit(): void {
+    this.loadWeatherStatsFromStorage();
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(WeatherDialogComponent);
+    this.loadWeatherStatsFromStorage();
+    const dialogRef = this.dialog.open(WeatherDialogComponent, {
+      data: { location: this.location, latitude: this.latitude, longitude: this.longitude }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
+        this.location = result.location;
+        this.weatherService.saveLocation(result, this.buttonTitle);
         this.updateWeather(result.latitude, result.longitude);
       }
     });
   }
 
-  updateWeather(lat: number, lon: number): void {
+  private loadWeatherStatsFromStorage(): void {
+    this.location = this.weatherService.getLocationByTitle(this.buttonTitle);
+    this.latitude =  this.weatherService.getLatitudeByTitle(this.buttonTitle);
+    this.longitude = this.weatherService.getLongitudeByTitle(this.buttonTitle);
+    if (this.latitude !== 0 && this.longitude !== 0) {
+      this.updateWeather(this.latitude, this.longitude);
+    }
+  }
+
+  private updateWeather(lat: number, lon: number): void {
     this.weatherService.getWeather(lat, lon).subscribe(res => {
       xml2js.parseString(res, (err, result) => {
         const stats = result.weatherdata.product[0].time[0].location[0];

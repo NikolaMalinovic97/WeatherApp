@@ -22,41 +22,8 @@ button {
     height: 260px;
 }
 
-.sun {
-    background-image: url("../../../assets/img/sun.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: 10% 80%;
-    height: 100%;
-    width: 100%;
-}
-
-.cloud-low {
-    background-image: url("../../../assets/img/cloud.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: 10% 90%;
-    opacity: 0.5;
-    height: 100%;
-    width: 100%;
-}
-
-.cloud-medium {
-    background-image: url("../../../assets/img/cloud.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: 10% 80%;
-    height: 100%;
-    width: 100%;
-}
-
-.cloud-high {
-    background-image: url("../../../assets/img/cloud.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: 10% 70%;
-    height: 100%;
-    width: 100%;
+.location {
+    min-height: 56px;
 }
 
 .mb {
