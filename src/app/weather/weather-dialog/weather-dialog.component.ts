@@ -1,7 +1,7 @@
 /// <reference types="@types/googlemaps" />
-import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, NgZone, Inject } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MapsAPILoader } from '@agm/core';
 import { GoogleLocationService } from '../service/google-location.service';
 
@@ -18,6 +18,7 @@ export class WeatherDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<WeatherDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
@@ -27,9 +28,13 @@ export class WeatherDialogComponent implements OnInit {
   ngOnInit(): void {
     this.locationForm = this.createLocationForm();
     this.initPlaces();
+    this.locationForm.get('location').setValue(this.data.location);
+    this.locationForm.get('latitude').setValue(this.data.latitude);
+    this.locationForm.get('longitude').setValue(this.data.longitude);
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
+    await this.updateLocation();
     this.dialogRef.close(this.locationForm.value);
   }
 

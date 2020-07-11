@@ -21,7 +21,7 @@ export class WeatherService {
 
   getLocationByTitle(title: string): string {
     if (localStorage.getItem(`${title}Location`) == null) {
-      return `Please choose ${title.toLowerCase()} location`;
+      return '';
     }
     const fullLocation = JSON.parse(localStorage.getItem(`${title}Location`));
     return fullLocation.location;
