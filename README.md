@@ -2,6 +2,8 @@
 
 This project is intended for practice purposes.
 
+App screenshot: https://ibb.co/M1yBG29
+
 ## Requirments
 
 - Node v12.18.2 (or newer)
