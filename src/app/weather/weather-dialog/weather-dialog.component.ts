@@ -25,7 +25,6 @@ export class WeatherDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.locationForm = this.createLocationForm();
-    this.updatePredictionOptions();
   }
 
   onLocationKeyUp(): any {
