@@ -4,7 +4,7 @@
 
   <mat-form-field appearance="outline" style="width: 100%;">
     <mat-label>Location</mat-label>
-    <input matInput placeholder="Enter location" formControlName="location" #search [matAutocomplete]="auto" (keyup)="onLocationKeyUp()">
+    <input matInput placeholder="Enter location" formControlName="location" [matAutocomplete]="auto" (keyup)="onLocationKeyUp()">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
       <mat-option *ngFor="let option of options" [value]="option" (onSelectionChange)="onOptionSelect($event)">
         {{option}}

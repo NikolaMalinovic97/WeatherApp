@@ -1,8 +1,7 @@
 /// <reference types="@types/googlemaps" />
-import { Component, OnInit, ViewChild, ElementRef, NgZone, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MapsAPILoader } from '@agm/core';
 import { GoogleLocationService } from '../service/google-location.service';
 import { Observable } from 'rxjs';
 
@@ -13,8 +12,6 @@ import { Observable } from 'rxjs';
 })
 export class WeatherDialogComponent implements OnInit {
 
-  @ViewChild('search') public searchElement: ElementRef;
-
   locationForm: FormGroup;
   options: string[] = [];
   filteredOptions: Observable<string[]>;
@@ -23,30 +20,16 @@ export class WeatherDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<WeatherDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
-    private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone,
     private googleLocationService: GoogleLocationService
   ) { }
 
   ngOnInit(): void {
     this.locationForm = this.createLocationForm();
-    this.locationForm.get('location').setValue(this.data.location);
-    this.locationForm.get('latitude').setValue(this.data.latitude);
-    this.locationForm.get('longitude').setValue(this.data.longitude);
-
-
     this.updatePredictionOptions();
-    // this.locationForm.get('location').valueChanges.subscribe(() => {
-    //   this.updatePredictionOptions();
-    //   const location = this.locationForm.get('location').value;
-    //   this.updateCoordinates(location);
-    // });
   }
 
   onLocationKeyUp(): any {
     this.updatePredictionOptions();
-    // const location = this.locationForm.get('location').value;
-    // this.updateCoordinates(location);
   }
 
   onOptionSelect(event): void {
@@ -69,7 +52,6 @@ export class WeatherDialogComponent implements OnInit {
 
   async updateCoordinates(location: string): Promise<void> {
     if (location !== '') {
-      console.log(location);
       const coordinates = await this.googleLocationService.getCoordinatesByLocation(location);
       this.locationForm.get('latitude').setValue(coordinates.lat);
       this.locationForm.get('longitude').setValue(coordinates.lng);
@@ -94,9 +76,9 @@ export class WeatherDialogComponent implements OnInit {
     const LONGITUDE = '^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]*)?))$';
 
     return this.formBuilder.group({
-      location: [''],
-      latitude: ['', [Validators.required, Validators.pattern(LATITUDE)]],
-      longitude: ['', [Validators.required, Validators.pattern(LONGITUDE)]]
+      location: [this.data.location],
+      latitude: [this.data.latitude, [Validators.required, Validators.pattern(LATITUDE)]],
+      longitude: [this.data.longitude, [Validators.required, Validators.pattern(LONGITUDE)]]
     });
   }
 }
