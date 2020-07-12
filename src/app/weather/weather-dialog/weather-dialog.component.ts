@@ -45,14 +45,12 @@ export class WeatherDialogComponent implements OnInit {
 
   onLocationKeyUp(): any {
     this.updatePredictionOptions();
-    const location = this.locationForm.get('location').value;
-    this.updateCoordinates(location);
+    // const location = this.locationForm.get('location').value;
+    // this.updateCoordinates(location);
   }
 
-  test(): void {
-    // TREBA NASTIMATI DA RADI I NA KEYUP.ENTER
-    console.log('radi');
-
+  onOptionSelect(event): void {
+    this.locationForm.get('location').setValue(event.source.value);
     this.updatePredictionOptions();
     const location = this.locationForm.get('location').value;
     this.updateCoordinates(location);
@@ -71,13 +69,12 @@ export class WeatherDialogComponent implements OnInit {
 
   async updateCoordinates(location: string): Promise<void> {
     if (location !== '') {
-      const coordinates = await this.googleLocationService.getCoordinatesByLocation(this.locationForm.get('location').value);
+      console.log(location);
+      const coordinates = await this.googleLocationService.getCoordinatesByLocation(location);
       this.locationForm.get('latitude').setValue(coordinates.lat);
       this.locationForm.get('longitude').setValue(coordinates.lng);
     }
   }
-
-
 
   async onSubmit(): Promise<void> {
     await this.updateLocation();
