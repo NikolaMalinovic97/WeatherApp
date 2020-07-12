@@ -5,7 +5,7 @@ import { MaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { WeatherDialogComponent } from './weather-dialog/weather-dialog.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { WeatherBackgroundDirective } from './directive/weather-background.directive';
 
 
@@ -19,7 +19,8 @@ import { WeatherBackgroundDirective } from './directive/weather-background.direc
     MaterialModule,
     FlexLayoutModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class WeatherModule { }

@@ -4,7 +4,13 @@
 
   <mat-form-field appearance="outline" style="width: 100%;">
     <mat-label>Location</mat-label>
-    <input matInput placeholder="Enter location" formControlName="location" #search>
+    <input matInput placeholder="Enter location" formControlName="location" #search [matAutocomplete]="auto" (keyup)="onLocationKeyUp()">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <!-- <mat-option *ngFor="let option of options | async" [value]="option"> -->
+      <mat-option *ngFor="let option of options" [value]="option" (click)="test()">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
 
   <h3 class="mb">Or enter coordinates</h3>
